@@ -7,15 +7,64 @@
 
 Begin Try
 	Use Master;
-	If Exists(Select Name From SysDatabases Where Name = 'starbucks_teamA')
+	If Exists(Select Name From SysDatabases Where Name = 'summer_starbucks_teamA')
 	 Begin 
-	  Alter Database [starbucks_teamA] set Single_user With Rollback Immediate;
-	  Drop Database starbucks_teamA;
+	  Alter Database [summer_starbucks_teamA] set Single_user With Rollback Immediate;
+	  Drop Database summer_starbucks_teamA;
 	 End
-	Create Database starbucks_teamA;
+	Create Database summer_starbucks_teamA;
 End Try
 Begin Catch
 	Print Error_Number();
 End Catch
 go
-Use starbucks_teamA;
+Use summer_starbucks_teamA;
+
+-- Conventions: Pleae copy and paste the following tables to use as conventions
+
+--*************************************************************************--
+-- Create Table: 
+-- Description:
+-- Change Log: When,Who,What
+-- 2019-07-30, WHO ,Created Table
+--**************************************************************************--
+-- Create a new table called '[TableName]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[TableName]', 'U') IS NOT NULL
+DROP TABLE [dbo].[TableName]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[TableName]
+(
+	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[ColumnName2] NVARCHAR(50) NOT NULL,
+	[ColumnName3] NVARCHAR(50) NOT NULL
+	-- Specify more columns here
+);
+GO
+
+/* Author: 
+Description: 
+Change Log: When,Who,What** 
+< DATE >,< WHO >,Created Sproc.*/
+CREATE PROCEDURE uspStoredProcedure (
+
+)
+AS 
+  BEGIN -- Body
+  DECLARE @RC int = 0;
+    BEGIN TRY   
+      BEGIN TRAN    
+      -- Transaction Code --
+      COMMIT TRAN 
+      SET @RC = +1;
+    END TRY  
+  BEGIN CATCH   
+    IF(@@Trancount > 0) 
+      ROLLBACK TRAN;   
+      PRINT Error_Message();
+      SET @RC = -1; 
+  END CATCH  
+  RETURN @RC;
+  END -- Body
+GO
