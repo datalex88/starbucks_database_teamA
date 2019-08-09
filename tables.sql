@@ -7,11 +7,13 @@
 
 Begin Try
 	Use Master;
-	If Exists(Select Name From SysDatabases Where Name = 'summer_starbucks_teamA')
-	 Begin 
-	  Alter Database [summer_starbucks_teamA] set Single_user With Rollback Immediate;
-	  Drop Database summer_starbucks_teamA;
-	 End
+	If Exists(Select Name
+From SysDatabases
+Where Name = 'summer_starbucks_teamA')
+	 Begin
+  Alter Database [summer_starbucks_teamA] set Single_user With Rollback Immediate;
+  Drop Database summer_starbucks_teamA;
+End
 	Create Database summer_starbucks_teamA;
 End Try
 Begin Catch
@@ -36,10 +38,10 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE [dbo].[TableName]
 (
-	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[ColumnName2] NVARCHAR(50) NOT NULL,
-	[ColumnName3] NVARCHAR(50) NOT NULL
-	-- Specify more columns here
+  [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [ColumnName2] NVARCHAR(50) NOT NULL,
+  [ColumnName3] NVARCHAR(50) NOT NULL
+  -- Specify more columns here
 );
 GO
 
@@ -50,10 +52,11 @@ Change Log: When,Who,What**
 CREATE PROCEDURE uspStoredProcedure (
 
 )
-AS 
-  BEGIN -- Body
+AS
+BEGIN
+  -- Body
   DECLARE @RC int = 0;
-    BEGIN TRY   
+  BEGIN TRY   
       BEGIN TRAN    
       -- Transaction Code --
       COMMIT TRAN 
@@ -64,7 +67,74 @@ AS
       ROLLBACK TRAN;   
       PRINT Error_Message();
       SET @RC = -1; 
-  END CATCH  
+  END CATCH
   RETURN @RC;
-  END -- Body
+END -- Body
+GO
+
+--*************************************************************************--
+-- Create Table: tblShippingStatus
+-- Description:
+-- Change Log: When,Who,What
+-- 2019-08-09, Austin ,Created Table
+--**************************************************************************--
+-- Create a new table called '[tblShippingStatus]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblShippingStatus]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblShippingStatus]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblShippingStatus]
+(
+  [ShippingStatusID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [ShippingStatusName] NVARCHAR(35) NOT NULL,
+  [ShippingStatusDesc] NVARCHAR(100) NOT NULL
+  -- Specify more columns here
+);
+GO
+
+--*************************************************************************--
+-- Create Table: tblTransportType
+-- Description:
+-- Change Log: When,Who,What
+-- 2019-08-09, Austin ,Created Table
+--**************************************************************************--
+-- Create a new table called '[tblTransportType]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblTransportType]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblTransportType]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblTransportType]
+(
+  [TransportTypeID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [TransportTypeName] NVARCHAR(35) NOT NULL,
+  [TransportTypeDesc] NVARCHAR(100) NOT NULL
+  -- Specify more columns here
+);
+GO
+
+--*************************************************************************--
+-- Create Table: tblTransport
+-- Description:
+-- Change Log: When,Who,What
+-- 2019-08-09, Austin ,Created Table
+--**************************************************************************--
+-- Create a new table called '[tblTransport]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblTransport]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblTransport]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblTransport]
+(
+  [TransportID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [TransportTypeID] INT NOT NULL,
+  [Capacity] INT NOT NULL,
+  [Range] INT NULL,
+  [Speed] INT NULL,
+  [Beam] INT NULL,
+  [Length] INT NULL
+  -- Specify more columns here
+);
 GO
