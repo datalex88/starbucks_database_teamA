@@ -68,3 +68,24 @@ AS
   RETURN @RC;
   END -- Body
 GO
+
+--*************************************************************************--
+-- Create Table: Waste 
+-- Description: This will track the waste for each shipment
+-- Change Log: When,Who,What
+-- 2019-08-09, Alex ,Created Table
+--**************************************************************************--
+-- Create a new table called '[tblWaste]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblWaste]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblWaste]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblWaste]
+(
+	[WasteId] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[ColumnName2] NVARCHAR(50) NOT NULL,
+	[ColumnName3] NVARCHAR(50) NOT NULL
+	-- Specify more columns here
+);
+GO
