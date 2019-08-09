@@ -50,7 +50,7 @@ Description:
 Change Log: When,Who,What** 
 < DATE >,< WHO >,Created Sproc.*/
 CREATE PROCEDURE uspStoredProcedure (
-
+-- add any parameters here
 )
 AS
 BEGIN
