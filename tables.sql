@@ -70,7 +70,6 @@ AS
 GO
 
 --*************************************************************************--
-<<<<<<< HEAD
 -- Create Table: tblInspector
 -- Description: A table with information on inspectors.
 -- Change Log: When,Who,What
@@ -85,8 +84,8 @@ GO
 CREATE TABLE [dbo].[tblInspector]
 (
 	[InspectorID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[InspectorFname] NVARCHAR(30) NOT NULL,
-	[InspectorLname] NVARCHAR(30) NOT NULL,
+	[InspectorFname]   NVARCHAR(30) NOT NULL,
+	[InspectorLname]   NVARCHAR(30) NOT NULL,
 	[InspectorCompany] NVARCHAR(50) NOT NULL
 );
 GO
@@ -106,8 +105,8 @@ GO
 CREATE TABLE [dbo].[tblBroker]
 (
 	[BrokerID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[BrokerFname] NVARCHAR(30) NOT NULL,
-	[BrokerLname] NVARCHAR(30) NOT NULL,
+	[BrokerFname]   NVARCHAR(30) NOT NULL,
+	[BrokerLname]   NVARCHAR(30) NOT NULL,
 	[BrokerCompany] NVARCHAR(50) NOT NULL
 );
 GO
@@ -126,14 +125,16 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE [dbo].[tblShippingContainerType]
 (
-	[ShippingContainerID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[ShippingContainerName] NVARCHAR(50) NOT NULL,
-	[ShippingContainerDescr] NVARCHAR(50) NOT NULL,
-	[ShippingContainerBrand] NVARCHAR(50) NOT NULL,
-  [ShippingContainerLength] NUMERIC(8,2) NOT NULL,
-  [ShippingContainerWidth] NUMERIC(8, 2) NOT NULL,
-  [ShippingContainerHeight] NUMERIC(8, 2) NOT NULL
-=======
+	[ShippingContainerID] 	  INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[ShippingContainerName]   NVARCHAR(50)  NOT NULL,
+	[ShippingContainerDescr]  NVARCHAR(50)  NOT NULL,
+	[ShippingContainerBrand]  NVARCHAR(50)  NOT NULL,
+  	[ShippingContainerLength] NUMERIC(8,2)  NOT NULL,
+  	[ShippingContainerWidth]  NUMERIC(8, 2) NOT NULL,
+  	[ShippingContainerHeight] NUMERIC(8, 2) NOT NULL
+);
+GO
+
 -- Create Table: Waste 
 -- Description: This will track the waste for each shipment
 -- Change Log: When,Who,What
@@ -149,9 +150,8 @@ CREATE TABLE [dbo].[tblWaste]
 (
 	[WasteId]        INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[InspectorID]    FOREIGN KEY REFERENCES tblINspector (InspectorID) NOT NULL,
-  [WasteAmmount]   NVARCHAR(50)  NOT NULL,
+  	[WasteAmmount]   NVARCHAR(50)  NOT NULL,
 	[ReasonForWaste] NVARCHAR(500) NOT NULL
 	-- Specify more columns here
->>>>>>> alex_branch
 );
 GO
