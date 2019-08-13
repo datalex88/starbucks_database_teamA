@@ -70,6 +70,7 @@ AS
 GO
 
 --*************************************************************************--
+<<<<<<< HEAD
 -- Create Table: tblInspector
 -- Description: A table with information on inspectors.
 -- Change Log: When,Who,What
@@ -132,5 +133,25 @@ CREATE TABLE [dbo].[tblShippingContainerType]
   [ShippingContainerLength] NUMERIC(8,2) NOT NULL,
   [ShippingContainerWidth] NUMERIC(8, 2) NOT NULL,
   [ShippingContainerHeight] NUMERIC(8, 2) NOT NULL
+=======
+-- Create Table: Waste 
+-- Description: This will track the waste for each shipment
+-- Change Log: When,Who,What
+-- 2019-08-09, Alex ,Created Table
+--**************************************************************************--
+-- Create a new table called '[tblWaste]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblWaste]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblWaste]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblWaste]
+(
+	[WasteId]        INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[InspectorID]    FOREIGN KEY REFERENCES tblINspector (InspectorID) NOT NULL,
+  [WasteAmmount]   NVARCHAR(50)  NOT NULL,
+	[ReasonForWaste] NVARCHAR(500) NOT NULL
+	-- Specify more columns here
+>>>>>>> alex_branch
 );
 GO
