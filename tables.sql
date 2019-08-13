@@ -83,9 +83,9 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE [dbo].[tblWaste]
 (
-	[WasteId] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[InspectorID] 
-  [WasteAmmount]   NVARCHAR(50) NOT NULL,
+	[WasteId]        INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[InspectorID]    FOREIGN KEY REFERENCES tblINspector (InspectorID) NOT NULL,
+  [WasteAmmount]   NVARCHAR(50)  NOT NULL,
 	[ReasonForWaste] NVARCHAR(500) NOT NULL
 	-- Specify more columns here
 );
