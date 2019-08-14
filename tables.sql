@@ -7,11 +7,13 @@
 
 Begin Try
 	Use Master;
-	If Exists(Select Name From SysDatabases Where Name = 'summer_starbucks_teamA')
+	If Exists(Select Name
+From SysDatabases
+Where Name = 'summer_starbucks_teamA')
 	 Begin
-	  Alter Database [summer_starbucks_teamA] set Single_user With Rollback Immediate;
-	  Drop Database summer_starbucks_teamA;
-	 End
+  Alter Database [summer_starbucks_teamA] set Single_user With Rollback Immediate;
+  Drop Database summer_starbucks_teamA;
+End
 	Create Database summer_starbucks_teamA;
 End Try
 Begin Catch
@@ -36,10 +38,10 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE [dbo].[TableName]
 (
-	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[ColumnName2] NVARCHAR(50) NOT NULL,
-	[ColumnName3] NVARCHAR(50) NOT NULL
-	-- Specify more columns here
+  [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [ColumnName2] NVARCHAR(50) NOT NULL,
+  [ColumnName3] NVARCHAR(50) NOT NULL
+  -- Specify more columns here
 );
 GO
 
@@ -51,9 +53,10 @@ CREATE PROCEDURE uspStoredProcedure (
 -- add any parameters here
 )
 AS
-  BEGIN -- Body
+BEGIN
+  -- Body
   DECLARE @RC int = 0;
-    BEGIN TRY
+  BEGIN TRY
       BEGIN TRAN
       -- Transaction Code --
       COMMIT TRAN
@@ -66,10 +69,31 @@ AS
       SET @RC = -1;
   END CATCH
   RETURN @RC;
-  END -- Body
+END -- Body
 GO
 
 --*************************************************************************--
+-- Create Table: tblShippingStatus
+-- Description: A table with information on shipping status.
+-- Change Log: When,Who,What
+-- 2019-08-09, Austin ,Created Table
+--**************************************************************************--
+-- Create a new table called '[tblShippingStatus]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblShippingStatus]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblShippingStatus]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblShippingStatus]
+(
+  [ShippingStatusID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [ShippingStatusName] NVARCHAR(35) NOT NULL,
+  [ShippingStatusDesc] NVARCHAR(100) NOT NULL
+  -- Specify more columns here
+);
+GO
+
+--**************************************************************************--
 -- Create Table: tblInspector
 -- Description: A table with information on inspectors.
 -- Change Log: When,Who,What
@@ -83,10 +107,31 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE [dbo].[tblInspector]
 (
-	[InspectorID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[InspectorFname]   NVARCHAR(30) NOT NULL,
-	[InspectorLname]   NVARCHAR(30) NOT NULL,
-	[InspectorCompany] NVARCHAR(50) NOT NULL
+  [InspectorID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [InspectorFname] NVARCHAR(30) NOT NULL,
+  [InspectorLname] NVARCHAR(30) NOT NULL,
+  [InspectorCompany] NVARCHAR(50) NOT NULL
+);
+GO
+
+--*************************************************************************--
+-- Create Table: tblTransportType
+-- Description: A table with information on transport type.
+-- Change Log: When,Who,What
+-- 2019-08-09, Austin ,Created Table
+--**************************************************************************--
+-- Create a new table called '[tblTransportType]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblTransportType]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblTransportType]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblTransportType]
+(
+  [TransportTypeID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [TransportTypeName] NVARCHAR(35) NOT NULL,
+  [TransportTypeDesc] NVARCHAR(100) NOT NULL
+  -- Specify more columns here
 );
 GO
 
@@ -104,14 +149,38 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE [dbo].[tblBroker]
 (
-	[BrokerID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[BrokerFname]   NVARCHAR(30) NOT NULL,
-	[BrokerLname]   NVARCHAR(30) NOT NULL,
-	[BrokerCompany] NVARCHAR(50) NOT NULL
+  [BrokerID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [BrokerFname] NVARCHAR(30) NOT NULL,
+  [BrokerLname] NVARCHAR(30) NOT NULL,
+  [BrokerCompany] NVARCHAR(50) NOT NULL
 );
 GO
 
 --*************************************************************************--
+-- Create Table: tblTransport
+-- Description: A table with information on transport.
+-- Change Log: When,Who,What
+-- 2019-08-09, Austin ,Created Table
+--**************************************************************************--
+-- Create a new table called '[tblTransport]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblTransport]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblTransport]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblTransport]
+(
+  [TransportID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [TransportTypeID] INT NOT NULL,
+  [Capacity] INT NOT NULL,
+  [Range] INT NULL,
+  [Speed] INT NULL,
+  [Beam] INT NULL,
+  [Length] INT NULL
+  -- Specify more columns here
+);
+GO
+
 -- Create Table: tblShippingContainerType
 -- Description: A table with information on shipping containers.
 -- Change Log: When,Who,What
@@ -125,13 +194,13 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE [dbo].[tblShippingContainerType]
 (
-	[ShippingContainerID] 	  INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[ShippingContainerName]   NVARCHAR(50)  NOT NULL,
-	[ShippingContainerDescr]  NVARCHAR(50)  NOT NULL,
-	[ShippingContainerBrand]  NVARCHAR(50)  NOT NULL,
-  	[ShippingContainerLength] NUMERIC(8,2)  NOT NULL,
-  	[ShippingContainerWidth]  NUMERIC(8, 2) NOT NULL,
-  	[ShippingContainerHeight] NUMERIC(8, 2) NOT NULL
+  [ShippingContainerID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [ShippingContainerName] NVARCHAR(50) NOT NULL,
+  [ShippingContainerDescr] NVARCHAR(50) NOT NULL,
+  [ShippingContainerBrand] NVARCHAR(50) NOT NULL,
+  [ShippingContainerLength] NUMERIC(8,2) NOT NULL,
+  [ShippingContainerWidth] NUMERIC(8, 2) NOT NULL,
+  [ShippingContainerHeight] NUMERIC(8, 2) NOT NULL
 );
 GO
 
@@ -149,9 +218,9 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE [dbo].[tblWaste]
 (
-	[WasteId]        INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[InspectorID]    FOREIGN KEY REFERENCES tblInspector (InspectorID) NOT NULL,
-  	[WasteAmmount]   NVARCHAR(50)  NOT NULL,
-	[ReasonForWaste] NVARCHAR(500) NOT NULL
+  [WasteId] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [InspectorID] FOREIGN KEY REFERENCES tblInspector (InspectorID) NOT NULL,
+  [WasteAmmount] NVARCHAR(50) NOT NULL,
+  [ReasonForWaste] NVARCHAR(500) NOT NULL
 );
 GO
