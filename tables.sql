@@ -74,7 +74,7 @@ GO
 
 --*************************************************************************--
 -- Create Table: tblShippingStatus
--- Description:
+-- Description: A table with information on shipping status.
 -- Change Log: When,Who,What
 -- 2019-08-09, Austin ,Created Table
 --**************************************************************************--
@@ -116,7 +116,7 @@ GO
 
 --*************************************************************************--
 -- Create Table: tblTransportType
--- Description:
+-- Description: A table with information on transport type.
 -- Change Log: When,Who,What
 -- 2019-08-09, Austin ,Created Table
 --**************************************************************************--
@@ -158,7 +158,7 @@ GO
 
 --*************************************************************************--
 -- Create Table: tblTransport
--- Description:
+-- Description: A table with information on transport.
 -- Change Log: When,Who,What
 -- 2019-08-09, Austin ,Created Table
 --**************************************************************************--
