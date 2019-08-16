@@ -307,7 +307,7 @@ CREATE TABLE [dbo].tblFarmCountry
   [FarmCountryID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
   [FarmRegionID] INT FOREIGN KEY REFERENCES tblFarmRegion (FarmRegionID) NOT NULL,
   [FarmCountryName] NVARCHAR(35) NOT NULL,
-  [FarmCountryDesc] NVARCHAR(100) NOT NULL
+  [FarmCountryDesc] NVARCHAR(100) NULL
   -- Specify more columns here
 );
 GO
