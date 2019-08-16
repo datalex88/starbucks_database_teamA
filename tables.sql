@@ -171,7 +171,7 @@ GO
 CREATE TABLE [dbo].[tblTransport]
 (
   [TransportID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-  [TransportTypeID] INT NOT NULL,
+  [TransportTypeID] INT FOREIGN KEY REFERENCES tblTransportType (TransportTypeID) NOT NULL,
   [Capacity] INT NOT NULL,
   [Range] INT NULL,
   [Speed] INT NULL,
@@ -219,7 +219,7 @@ GO
 CREATE TABLE [dbo].[tblWaste]
 (
   [WasteId] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-  [InspectorID] FOREIGN KEY REFERENCES tblInspector (InspectorID) NOT NULL,
+  [InspectorID] INT FOREIGN KEY REFERENCES tblInspector (InspectorID) NOT NULL,
   [WasteAmmount] NVARCHAR(50) NOT NULL,
   [ReasonForWaste] NVARCHAR(500) NOT NULL
 );
