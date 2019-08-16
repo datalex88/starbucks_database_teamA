@@ -285,7 +285,7 @@ CREATE TABLE [dbo].tblFarmRegion
 (
   [FarmRegionID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
   [FarmRegionName] NVARCHAR(35) NOT NULL,
-  [FarmRegionDesc] NVARCHAR(100) NOT NULL
+  [FarmRegionDesc] NVARCHAR(100) NULL
   -- Specify more columns here
 );
 GO
