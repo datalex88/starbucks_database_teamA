@@ -224,3 +224,142 @@ CREATE TABLE [dbo].[tblWaste]
   [ReasonForWaste] NVARCHAR(500) NOT NULL
 );
 GO
+
+
+--*************************************************************************--
+-- Create Table: tblCoffeeContainerType
+-- Description: A table with information on the type of container for the coffee beans.
+-- Change Log: When,Who,What
+-- 2019-08-16, Maxwell/Youssof, Created Table
+--**************************************************************************--
+-- Create a new table called '[tblCoffeeContainerType]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblCoffeeContainerType]', 'U') IS NOT NULL
+DROP TABLE [dbo].tblCoffeeContainerType
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].tblCoffeeContainerType
+(
+  [CoffeeContainerTypeID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [CoffeeContainerTypeName] NVARCHAR(35) NOT NULL,
+  [CoffeeContainerTypeDesc] NVARCHAR(100) NOT NULL
+  -- Specify more columns here
+);
+GO
+
+--*************************************************************************--
+-- Create Table: tblCoffeeGrower
+-- Description: A table with information on the persons growing the coffee plants.
+-- Change Log: When,Who,What
+-- 2019-08-16, Maxwell/Youssof, Created Table
+--**************************************************************************--
+-- Create a new table called '[tblCoffeeGrower]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblCoffeeGrower]', 'U') IS NOT NULL
+DROP TABLE [dbo].tblCoffeeGrower
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].tblCoffeeGrower
+(
+  [CoffeeGrowerID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [CoffeeGrowerFName] NVARCHAR(35) NOT NULL,
+  [CoffeeGrowerLName] NVARCHAR(35) NOT NULL,
+  [CoffeeGrowerDOB] DATE NOT NULL
+  -- Specify more columns here
+);
+GO
+
+--*************************************************************************--
+-- Create Table: tblFarmRegion
+-- Description: A table with information on the region the coffee farm is in.
+-- Change Log: When,Who,What
+-- 2019-08-16, Maxwell/Youssof, Created Table
+--**************************************************************************--
+-- Create a new table called '[tblFarmRegion]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblFarmRegion]', 'U') IS NOT NULL
+DROP TABLE [dbo].tblFarmRegion
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].tblFarmRegion
+(
+  [FarmRegionID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [FarmRegionName] NVARCHAR(35) NOT NULL,
+  [FarmRegionDesc] NVARCHAR(100) NOT NULL
+  -- Specify more columns here
+);
+GO
+
+--*************************************************************************--
+-- Create Table: tblFarmCountry
+-- Description: A table with information on the country the farm is in.
+-- Change Log: When,Who,What
+-- 2019-08-16, Maxwell/Youssof, Created Table
+--**************************************************************************--
+-- Create a new table called '[tblFarmCountry]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblFarmCountry]', 'U') IS NOT NULL
+DROP TABLE [dbo].tblFarmCountry
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].tblFarmCountry
+(
+  [FarmCountryID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [FarmRegionID] INT FOREIGN KEY REFERENCES tblFarmRegion (FarmRegionID) NOT NULL,
+  [FarmCountryName] NVARCHAR(35) NOT NULL,
+  [FarmCountryDesc] NVARCHAR(100) NOT NULL
+  -- Specify more columns here
+);
+GO
+
+
+--*************************************************************************--
+-- Create Table: tblFarm
+-- Description: A table with information on the farms that the coffee plants grew on.
+-- Change Log: When,Who,What
+-- 2019-08-16, Maxwell/Youssof, Created Table
+--**************************************************************************--
+-- Create a new table called '[tblFarm]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblFarm]', 'U') IS NOT NULL
+DROP TABLE [dbo].tblFarm
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].tblFarm
+(
+  [FarmID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [CoffeeGrowerID] INT FOREIGN KEY REFERENCES tblCoffeeGrower (CoffeeGrowerID) NOT NULL,
+  [FarmCountryID] INT FOREIGN KEY REFERENCES tblFarmCountry (FarmCountryID) NOT NULL,
+  [FarmName] NVARCHAR(35) NOT NULL,
+  [Address] NVARCHAR(35) NOT NULL,
+  [City] NVARCHAR(35) NOT NULL,
+  [Latitude] DECIMAL(9,6) NOT NULL,
+  [Longitude] DECIMAL(9,6) NOT NULL,
+  [Acreage] NUMERIC(8,2) NOT NULL,
+  [FarmDesc] NVARCHAR(100) NOT NULL
+  -- Specify more columns here
+);
+GO
+
+--*************************************************************************--
+-- Create Table: tblCoffeeContainer
+-- Description: A table with information on the container holding the coffee beans.
+-- Change Log: When,Who,What
+-- 2019-08-16, Maxwell/Youssof, Created Table
+--**************************************************************************--
+-- Create a new table called '[tblCoffeeContainer]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblCoffeeContainer]', 'U') IS NOT NULL
+DROP TABLE [dbo].tblCoffeeContainer
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].tblCoffeeContainer
+(
+  [CoffeeContainerID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [FarmID] INT FOREIGN KEY REFERENCES tblFarm (FarmID) NOT NULL,
+  [CoffeeContainerTypeID] INT FOREIGN KEY REFERENCES tblCoffeeContainerType (CoffeeContainerTypeID) NOT NULL,
+  [Weight] NUMERIC(8,2) NOT NULL,
+  [Volume] NUMERIC(8,2) NOT NULL
+  -- Specify more columns here
+);
+GO
