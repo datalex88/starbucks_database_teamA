@@ -7,7 +7,7 @@
 
 Begin Try
 	Use Master;
-	If Exists(Select Name
+	If Exists(Select summer_starbucks_teamA
 From SysDatabases
 Where Name = 'summer_starbucks_teamA')
 	 Begin
@@ -291,29 +291,6 @@ CREATE TABLE [dbo].tblFarmRegion
 GO
 
 --*************************************************************************--
--- Create Table: tblFarmCountry
--- Description: A table with information on the country the farm is in.
--- Change Log: When,Who,What
--- 2019-08-16, Maxwell/Youssof, Created Table
---**************************************************************************--
--- Create a new table called '[tblFarmCountry]' in schema '[dbo]'
--- Drop the table if it already exists
-IF OBJECT_ID('[dbo].[tblFarmCountry]', 'U') IS NOT NULL
-DROP TABLE [dbo].tblFarmCountry
-GO
--- Create the table in the specified schema
-CREATE TABLE [dbo].tblFarmCountry
-(
-  [FarmCountryID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-  [FarmRegionID] INT FOREIGN KEY REFERENCES tblFarmRegion (FarmRegionID) NOT NULL,
-  [FarmCountryName] NVARCHAR(35) NOT NULL,
-  [FarmCountryDesc] NVARCHAR(100) NULL
-  -- Specify more columns here
-);
-GO
-
-
---*************************************************************************--
 -- Create Table: tblFarm
 -- Description: A table with information on the farms that the coffee plants grew on.
 -- Change Log: When,Who,What
@@ -365,22 +342,24 @@ CREATE TABLE [dbo].tblCoffeeContainer
 GO
 
 --*************************************************************************--
--- Create Table: tblLOCATION_TYPE
--- Description: Describes the type of location shipping vessels travel to / from
+-- Create Table: tblFarmCountry
+-- Description: A table with information on the country the farm is in.
 -- Change Log: When,Who,What
--- 2019-08-13, Will ,Created Table
+-- 2019-08-16, Maxwell/Youssof, Created Table
 --**************************************************************************--
--- Create a new table called '[tblLOCATION_TYPE]' in schema '[dbo]'
+-- Create a new table called '[tblFarmCountry]' in schema '[dbo]'
 -- Drop the table if it already exists
-IF OBJECT_ID('[dbo].[tblLOCATION_TYPE]', 'U') IS NOT NULL
-DROP TABLE [dbo].[tblLOCATION_TYPE]
+IF OBJECT_ID('[dbo].[tblFarmCountry]', 'U') IS NOT NULL
+DROP TABLE [dbo].tblFarmCountry
 GO
 -- Create the table in the specified schema
-CREATE TABLE [dbo].[tblLOCATION_TYPE]
+CREATE TABLE [dbo].tblFarmCountry
 (
-	LocationTypeID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	LocationTypeName VARCHAR(100) NOT NULL,
-    LocationTypeDesc VARCHAR(200) NULL
+  [FarmCountryID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [FarmRegionID] INT FOREIGN KEY REFERENCES tblFarmRegion (FarmRegionID) NOT NULL,
+  [FarmCountryName] NVARCHAR(35) NOT NULL,
+  [FarmCountryDesc] NVARCHAR(100) NULL
+  -- Specify more columns here
 );
 GO
 
@@ -444,5 +423,45 @@ CREATE TABLE [dbo].[tblLOCATION]
     LocationTypeID INT FOREIGN KEY REFERENCES tblLOCATION_TYPE (LocationTypeID) NOT NULL,
     LocationName VARCHAR(100) NOT NULL,
     LocationDesc VARCHAR(200) NULL
+);
+GO
+
+--*************************************************************************--
+-- Create Table: tblPurchaseOrder
+-- Description: Tracks purchase orders
+-- Change Log: When,Who,What
+-- 2019-08-24, Alex ,Created Table
+--**************************************************************************--
+-- Create a new table called '[tblPurchaseOrder]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblPurchaseOrder]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblPurchaseOrder]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblPurchaseOrder]
+(
+	PurchaseOrderID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	BrokerID        INT FOREIGN KEY REFERENCES tblBroker (BrokerID) NOT NULL,
+  PODate          DATE NOT NULL
+);
+GO
+
+--*************************************************************************--
+-- Create Table: tblOrderContainer
+-- Description: a table to break up a m2m relationship between tblPO and tblShippingcontainer
+-- Change Log: When,Who,What
+-- 2019-08-24, Alex ,Created Table
+--**************************************************************************--
+-- Create a new table called '[tblOrderContainer]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblOrderContainer]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblOrderContainer]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblOrderContainer]
+(
+	OrderContainerID    INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	PurchaseOrderID     INT FOREIGN KEY REFERENCES tblPurchaseOrder     (PurchaseOrderID)     NOT NULL,
+  ShippingContainerID INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL
 );
 GO
