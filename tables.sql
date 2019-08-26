@@ -526,3 +526,47 @@ CREATE TABLE [dbo].[tblCoffeeContainer]
   [CoffeeContainerTypeID] INT FOREIGN KEY REFERENCES tbl
 );
 GO
+
+--*************************************************************************--
+-- Create Table: tblEnvironmentalStatus
+-- Description: A table with information on the encironmental conditions within the the container for the coffee beans.
+-- Change Log: When,Who,What
+-- 2019-08-24, Maxwell, Created Table
+--**************************************************************************--
+-- Create a new table called '[tblEnvironmentalStatus]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblEnvironmentalStatus]', 'U') IS NOT NULL
+DROP TABLE [dbo].tblEnvironmentalStatus
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].tblEnvironmentalStatus
+(
+  [EnvironmentalStatusID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [Humidity] NUMERIC(8,2) NOT NULL,
+  [Temperature] NUMERIC(8,2) NOT NULL,
+  [Sun Exposure] NUMERIC(8,2) NOT NULL
+  -- Specify more columns here
+);
+GO
+--*************************************************************************--
+-- Create Table: tblContainerStatus
+-- Description: A table with information on the status of container for the coffee beans.
+-- Change Log: When,Who,What
+-- 2019-08-24, Maxwell, Created Table
+--**************************************************************************--
+-- Create a new table called '[tblContainerStatus]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblContainerStatus]', 'U') IS NOT NULL
+DROP TABLE [dbo].tblContainerStatus
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].tblContainerStatus
+(
+  [ContainerStatusID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [EnvironmentalStatusID] INT FOREIGN KEY REFERENCES tblEnvironmentalStatus (EnvironmentalStatusID) NOT NULL,
+  [ShippingContainerID] INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL,
+  [StartDateTime] DateTime NOT NULL,
+  [EndDateTime] DateTime NOT NULL
+  -- Specify more columns here
+);
+GO
