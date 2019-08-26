@@ -364,6 +364,26 @@ CREATE TABLE [dbo].tblFarmCountry
 GO
 
 --*************************************************************************--
+-- Create Table: tblLOCATION_TYPE
+-- Description: Describes the type of location shipping vessels travel to / from
+-- Change Log: When,Who,What
+-- 2019-08-13, Will ,Created Table
+--**************************************************************************--
+-- Create a new table called '[tblLOCATION_TYPE]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblLOCATION_TYPE]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblLOCATION_TYPE]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblLOCATION_TYPE]
+(
+	LocationTypeID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	LocationTypeName VARCHAR(100) NOT NULL,
+    LocationTypeDesc VARCHAR(200) NULL
+);
+GO
+
+--*************************************************************************--
 -- Create Table: tblREGION
 -- Description: Describes the region a country resides within
 -- Change Log: When,Who,What
@@ -378,7 +398,7 @@ GO
 CREATE TABLE [dbo].[tblREGION]
 (
 	RegionID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	RegionName VARCHAR(100) NOT NULL,
+	  RegionName VARCHAR(100) NOT NULL,
     RegionDesc VARCHAR(200) NULL
 );
 GO
@@ -399,7 +419,7 @@ CREATE TABLE [dbo].[tblCOUNTRY]
 (
 	CountryID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     RegionID INT FOREIGN KEY REFERENCES tblREGION (RegionID) NOT NULL,
-	CountryName VARCHAR(100) NOT NULL,
+	  CountryName VARCHAR(100) NOT NULL,
     CountryDesc VARCHAR(200) NULL
 );
 GO
@@ -463,5 +483,27 @@ CREATE TABLE [dbo].[tblOrderContainer]
 	OrderContainerID    INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	PurchaseOrderID     INT FOREIGN KEY REFERENCES tblPurchaseOrder     (PurchaseOrderID)     NOT NULL,
   ShippingContainerID INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL
+);
+GO
+
+--*************************************************************************--
+-- Create Table: tblSHIP_TRIP
+-- Description: Describes the type of location shipping vessels travel to / from
+-- Change Log: When,Who,What
+-- 2019-08-13, Will ,Created Table
+--**************************************************************************--
+-- Create a new table called '[tblSHIP_TRIP]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblSHIP_TRIP]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblSHIP_TRIP]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblSHIP_TRIP]
+(
+  ShipTripID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+  TripID INT FOREIGN KEY REFERENCES tblTRIP (TripID) NOT NULL,
+  ShippingStatusID INT FOREIGN KEY REFERENCES tblSHIPPING_STATUS (ShippingStatusID) NOT NULL,
+  StartDateTime DATETIME NOT NULL,
+  EndDateTime DATETIME NULL
 );
 GO
