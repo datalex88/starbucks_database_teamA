@@ -507,3 +507,22 @@ CREATE TABLE [dbo].[tblSHIP_TRIP]
   EndDateTime DATETIME NULL
 );
 GO
+
+--*************************************************************************--
+-- Create Table: tblCoffeeContainer
+-- Description: A table with information on CoffeeContainers.
+-- Change Log: When,Who,What
+-- 2019-08-26, Joey, Created Table
+--**************************************************************************--
+-- Create a new table called '[tblCoffeeContainer]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblCoffeeContainer]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblCoffeeContainer]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblCoffeeContainer]
+(
+  [CoffeeContainerID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [CoffeeContainerTypeID] INT FOREIGN KEY REFERENCES tbl
+);
+GO
