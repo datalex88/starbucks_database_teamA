@@ -32,7 +32,6 @@ BEGIN
 END -- Body
 GO
 
-<<<<<<< HEAD
 /* Author: Joey
 Description: Insert into tblInspector
 Change Log: When,Who,What**
@@ -174,7 +173,33 @@ CREATE PROCEDURE uspInsertTrip (
 @DestinationShippingPort NVARCHAR(100),
 @DepartureTime DateTime,
 @ArrivalTime DateTime
-=======
+)
+AS
+BEGIN
+  -- Body
+  DECLARE @RC int = 0;
+
+  DECLARE @TRANSPORT_ID INT = (SELECT TransportID FROM tblTransport WHERE TransportName = @TransportName)
+  DECLARE @SC_ID INT = (SELECT ShippingContainerID FROM tblShippingContainer WHERE ShippingContainerName = @ShippingContainerName)
+
+  BEGIN TRY
+      BEGIN TRAN
+      -- Transaction Code --
+        INSERT INTO tblTrip (TransportID, ShippingContainerID, [OriginShippingPort], [DestinationShippingPort], [DepartureTime], [ArrivalTime])
+        VALUES (@TRANSPORT_ID, @SC_ID, @OriginShippingPort, @DestinationShippingPort, @DepartureTime, @ArrivalTime)
+      COMMIT TRAN
+      SET @RC = +1;
+    END TRY
+  BEGIN CATCH
+    IF(@@Trancount > 0)
+      ROLLBACK TRAN;
+      PRINT Error_Message();
+      SET @RC = -1;
+  END CATCH
+  RETURN @RC;
+END -- Body
+GO
+
 /* Author: Alex
 Description: A SPROC to insert info into tblShippingContainer
 Change Log: When,Who,What**
@@ -187,23 +212,8 @@ CREATE PROCEDURE uspInsert_ShippingContainer (
 @InspectFname    NVARCHAR(30),
 @InspectLname    NVARCHAR(30),
 @TripID          INTEGER
->>>>>>> alex_feature2
 )
-AS
-BEGIN
-  -- Body
-<<<<<<< HEAD
-  DECLARE @RC int = 0;
 
-  DECLARE @TRANSPORT_ID INT = (SELECT TransportID FROM tblTransport WHERE TransportName = @TransportName)
-  DECLARE @SC_ID INT = (SELECT ShippingContainerID FROM tblShippingContainer WHERE ShippingContainerName = @ShippingContainerName)
-
-  BEGIN TRY
-      BEGIN TRAN
-      -- Transaction Code --
-        INSERT INTO tblTrip (TransportID, ShippingContainerID, [OriginShippingPort], [DestinationShippingPort], [DepartureTime], [ArrivalTime])
-        VALUES (@TRANSPORT_ID, @SC_ID, @OriginShippingPort, @DestinationShippingPort, @DepartureTime, @ArrivalTime)
-=======
   DECLARE @RC int = 0,
   -- Look up ID's from appropriate tables -- 
   @Coff_Cont_ID INTEGER, 
