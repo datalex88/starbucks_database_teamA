@@ -161,3 +161,41 @@ AS
   END -- Body
 GO
 
+/* Author: Austin Quach
+Description: Insert into tblTrip
+Change Log: When,Who,What**
+2019-08-26, Austin, Created Sproc.*/
+CREATE PROCEDURE uspStoredProcedure (
+-- add any parameters here
+@TransportName NVARCHAR(35),
+@ShippingContainerName NVARCHAR(35),
+@OriginShippingPort NVARCHAR(100),
+@DestinationShippingPort NVARCHAR(100),
+@DepartureTime DateTime,
+@ArrivalTime DateTime
+)
+AS
+BEGIN
+  -- Body
+  DECLARE @RC int = 0;
+
+  DECLARE @TRANSPORT_ID INT = (SELECT TransportID FROM tblTransport WHERE TransportName = @TransportName)
+  DECLARE @SC_ID INT = (SELECT ShippingContainerID FROM tblShippingContainer WHERE ShippingContainerName = @ShippingContainerName)
+
+  BEGIN TRY
+      BEGIN TRAN
+      -- Transaction Code --
+        INSERT INTO tblTrip (TransportID, ShippingContainerID, [OriginShippingPort], [DestinationShippingPort], [DepartureTime], [ArrivalTime])
+        VALUES (@TRANSPORT_ID, @SC_ID, @OriginShippingPort, @DestinationShippingPort, @DepartureTime, @ArrivalTime)
+      COMMIT TRAN
+      SET @RC = +1;
+    END TRY
+  BEGIN CATCH
+    IF(@@Trancount > 0)
+      ROLLBACK TRAN;
+      PRINT Error_Message();
+      SET @RC = -1;
+  END CATCH
+  RETURN @RC;
+END -- Body
+GO

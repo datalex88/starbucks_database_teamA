@@ -172,6 +172,7 @@ CREATE TABLE [dbo].[tblTransport]
 (
   [TransportID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
   [TransportTypeID] INT FOREIGN KEY REFERENCES tblTransportType (TransportTypeID) NOT NULL,
+  [TransportName] VARCHAR(35) NOT NULL,
   [Capacity] INT NOT NULL,
   [Range] INT NULL,
   [Speed] INT NULL,
