@@ -213,7 +213,8 @@ CREATE PROCEDURE uspInsert_ShippingContainer (
 @InspectLname    NVARCHAR(30),
 @TripID          INTEGER
 )
-
+AS
+BEGIN
   DECLARE @RC int = 0,
   -- Look up ID's from appropriate tables -- 
   @Coff_Cont_ID INTEGER, 
@@ -252,7 +253,6 @@ CREATE PROCEDURE uspInsert_ShippingContainer (
           @Capacity,
           @Volume
       )
->>>>>>> alex_feature2
       COMMIT TRAN
       SET @RC = +1;
     END TRY
