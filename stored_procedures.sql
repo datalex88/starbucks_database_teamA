@@ -165,7 +165,7 @@ GO
 Description: Insert into tblTrip
 Change Log: When,Who,What**
 2019-08-26, Austin, Created Sproc.*/
-CREATE PROCEDURE uspStoredProcedure (
+CREATE PROCEDURE uspInsertTrip (
 -- add any parameters here
 @TransportName NVARCHAR(35),
 @ShippingContainerName NVARCHAR(35),
