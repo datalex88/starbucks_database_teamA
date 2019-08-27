@@ -4,7 +4,7 @@
 -- Change Log: When,Who,What
 -- 2019-08-24,Davisa88,Created File
 --**************************************************************************--
-
+USE summer_starbucks_teamA
 /* Author:
 Description:
 Change Log: When,Who,What**
@@ -32,6 +32,7 @@ BEGIN
 END -- Body
 GO
 
+<<<<<<< HEAD
 /* Author: Joey
 Description: Insert into tblInspector
 Change Log: When,Who,What**
@@ -173,10 +174,25 @@ CREATE PROCEDURE uspInsertTrip (
 @DestinationShippingPort NVARCHAR(100),
 @DepartureTime DateTime,
 @ArrivalTime DateTime
+=======
+/* Author: Alex
+Description: A SPROC to insert info into tblShippingContainer
+Change Log: When,Who,What**
+< DATE >,< WHO >,Created Sproc.*/
+CREATE PROCEDURE uspInsert_ShippingContainer (
+@Capacity        NUMERIC(5,2),
+@Volume          NUMERIC(5,2),
+@ShipConTypeName NVARCHAR(50),
+@Coff_Cont_ID    INTEGER,
+@InspectFname    NVARCHAR(30),
+@InspectLname    NVARCHAR(30),
+@TripID          INTEGER
+>>>>>>> alex_feature2
 )
 AS
 BEGIN
   -- Body
+<<<<<<< HEAD
   DECLARE @RC int = 0;
 
   DECLARE @TRANSPORT_ID INT = (SELECT TransportID FROM tblTransport WHERE TransportName = @TransportName)
@@ -187,6 +203,46 @@ BEGIN
       -- Transaction Code --
         INSERT INTO tblTrip (TransportID, ShippingContainerID, [OriginShippingPort], [DestinationShippingPort], [DepartureTime], [ArrivalTime])
         VALUES (@TRANSPORT_ID, @SC_ID, @OriginShippingPort, @DestinationShippingPort, @DepartureTime, @ArrivalTime)
+=======
+  DECLARE @RC int = 0,
+  -- Look up ID's from appropriate tables -- 
+  @Coff_Cont_ID INTEGER, 
+  @Inspect_ID   INTEGER,
+  @Ship_Con_ID  INTEGER,
+  @Trip_ID      INTEGER;
+  BEGIN TRY
+      BEGIN TRAN
+
+      SET @Inspect_ID = (SELECT InspectionID -- Information for finding InspectorID
+                         FROM   tblInspection INS
+                         JOIN   tblInspector IOR ON INS.InspectorID = IOR.InspectorID
+                         WHERE  InspectorFName = @InspectFname
+                         AND    InspectorLName = @InspectLname
+      )
+      SET @Ship_Con_ID = (SELECT ShippingContainerTypeID -- For finding the shippingcontainerTypeID
+                          FROM tblShippingContainerType
+                          WHERE ShippingContainerTypeName = @ShipConTypeName
+      )
+      -- Transaction Code --
+      INSERT INTO tblShippingContainer(
+          CoffeeContainerID,
+          InspectionID,
+          ShippingContainerID,
+          TripID,
+          ShippingContainerName,
+          Capacity,
+          Volume
+      )
+      VALUES(
+          @Coff_Cont_ID,
+          @Inspect_ID,
+          @Ship_Con_ID,
+          @TripID,
+          @ShipConName,
+          @Capacity,
+          @Volume
+      )
+>>>>>>> alex_feature2
       COMMIT TRAN
       SET @RC = +1;
     END TRY
