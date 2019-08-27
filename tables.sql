@@ -172,6 +172,7 @@ CREATE TABLE [dbo].[tblTransport]
 (
   [TransportID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
   [TransportTypeID] INT FOREIGN KEY REFERENCES tblTransportType (TransportTypeID) NOT NULL,
+  [TransportName] VARCHAR(35) NOT NULL,
   [Capacity] INT NOT NULL,
   [Range] INT NULL,
   [Speed] INT NULL,
@@ -567,6 +568,31 @@ CREATE TABLE [dbo].tblContainerStatus
   [ShippingContainerID] INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL,
   [StartDateTime] DateTime NOT NULL,
   [EndDateTime] DateTime NOT NULL
+  -- Specify more columns here
+);
+GO
+
+--*************************************************************************--
+-- Create Table: tblTrip
+-- Description: A table with information on the status of the trip.
+-- Change Log: When,Who,What
+-- 2019-08-26, Austin, Created Table
+--**************************************************************************--
+-- Create a new table called '[tblTrip]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblTrip]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblTrip]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblTrip]
+(
+  [TripID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [TransportID] INT FOREIGN KEY REFERENCES tblTransport (TransportID) NOT NULL,
+  [ShippingContainerID] INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL,
+  [OriginShippingPort] VARCHAR(100) NOT NULL,
+  [DestinationShippingPort] VARCHAR(100) NOT NULL,
+  [DepartureTime] DateTime NOT NULL,
+  [ArrivalTime] DateTime NOT NULL
   -- Specify more columns here
 );
 GO
