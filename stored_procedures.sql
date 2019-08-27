@@ -33,20 +33,17 @@ END -- Body
 GO
 
 /* Author: Alex
-Description: A SPROC for a new Purchase Order
+Description: A SPROC to insert info into tblShippingContainer
 Change Log: When,Who,What**
 < DATE >,< WHO >,Created Sproc.*/
-CREATE PROCEDURE uspShippingContainer (
-@Capacity            NUMERIC(5,2),
-@Volume              NUMERIC(5,2),
-@ShipConName         NVARCHAR(50),
-@CoffeeContainerType NVARCHAR(50),
-@TransportTypeName   NVARCHAR(50),
-@Origin              NVARCHAR(50),
-@Destination         NVARCHAR(50),
-@InspectFname        NVARCHAR(50),
-@InspectLname        NVARCHAR(50),
-@Farmname            NVARCHAR(50)
+CREATE PROCEDURE uspInsert_ShippingContainer (
+@Capacity        NUMERIC(5,2),
+@Volume          NUMERIC(5,2),
+@ShipConTypeName NVARCHAR(50),
+@Coff_Cont_ID    INTEGER,
+@InspectFname    NVARCHAR(30),
+@InspectLname    NVARCHAR(30),
+@TripID          INTEGER
 )
 AS
 BEGIN
@@ -59,23 +56,16 @@ BEGIN
   @Trip_ID      INTEGER;
   BEGIN TRY
       BEGIN TRAN
-      SET @Coff_Cont_ID = (SELECT CoffeeContainerID
-                           FROM tblCoffeeContainer
-                           WHERE  
-      )
-      SET @Inspect_ID = (SELECT InspectionID
+
+      SET @Inspect_ID = (SELECT InspectionID -- Information for finding InspectorID
                          FROM   tblInspection INS
                          JOIN   tblInspector IOR ON INS.InspectorID = IOR.InspectorID
                          WHERE  InspectorFName = @InspectFname
                          AND    InspectorLName = @InspectLname
       )
-      SET @Ship_Con_ID = (SELECT ShippingContainerID
-                          FROM tblShippingContainerID
-
-      )
-      SET @Trip_ID = (SELECT TripID
-                      FROM tblTrip
-
+      SET @Ship_Con_ID = (SELECT ShippingContainerTypeID -- For finding the shippingcontainerTypeID
+                          FROM tblShippingContainerType
+                          WHERE ShippingContainerTypeName = @ShipConTypeName
       )
       -- Transaction Code --
       INSERT INTO tblShippingContainer(
@@ -83,6 +73,7 @@ BEGIN
           InspectionID,
           ShippingContainerID,
           TripID,
+          ShippingContainerName,
           Capacity,
           Volume
       )
@@ -90,7 +81,10 @@ BEGIN
           @Coff_Cont_ID,
           @Inspect_ID,
           @Ship_Con_ID,
-          @Trip_ID
+          @TripID,
+          @ShipConName,
+          @Capacity,
+          @Volume
       )
       COMMIT TRAN
       SET @RC = +1;
