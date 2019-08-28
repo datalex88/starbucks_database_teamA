@@ -363,3 +363,51 @@ CREATE TABLE [dbo].tblCoffeeContainer
   -- Specify more columns here
 );
 GO
+
+--*************************************************************************--
+-- Create Table: tblShippingContainer
+-- Description: A table with information on the persons growing the coffee plants.
+-- Change Log: When,Who,What
+-- 2019-08-16, Youssof, Created Table
+--**************************************************************************--
+-- Create a new table called '[tblShippingContainer]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblShippingContainer]', 'U') IS NOT NULL
+DROP TABLE [dbo].tblShippingContainer
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].tblShippingContainer
+(
+  [ShippingContainerID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [CoffeeContainerID] INT FOREIGN KEY REFERENCES tblCoffeeContainer (CoffeeContainerID) NOT NULL,
+  [InspectionID] INT FOREIGN KEY REFERENCES tblInspection (InspectionID) NOT NULL,
+  [ShippingContainerTypeID] INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL,
+  [TripID] INT FOREIGN KEY REFERENCES tblTrip (TripID) NOT NULL,
+  [ShippingContainerName] NVARCHAR(35) NOT NULL,
+  [Capacity] NUMERIC(8,2) NOT NULL,
+  [Volume] NUMERIC(8,2) NOT NULL
+  -- Specify more columns here
+);
+GO
+
+--*************************************************************************--
+-- Create Table: tblInspection
+-- Description: A table with information on the persons growing the coffee plants.
+-- Change Log: When,Who,What
+-- 2019-08-16, Youssof, Created Table
+--**************************************************************************--
+-- Create a new table called '[tblInspection]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblInspection]', 'U') IS NOT NULL
+DROP TABLE [dbo].tblInspection
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].tblInspection
+(
+  [InspectionID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [ShippingContainerID] INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL,
+  [InspectorID] INT FOREIGN KEY REFERENCES tblInspector (InspectorID) NOT NULL,
+  [InspectionDateTime] DATETIME NOT NULL
+  -- Specify more columns here
+);
+GO
