@@ -218,7 +218,8 @@ BEGIN
   DECLARE @RC int = 0,
   -- Look up ID's from appropriate tables -- 
   @Coff_Cont_ID INTEGER, 
-  @Ship_Con_ID  INTEGER;
+  @Inspect_ID   INTEGER,
+  @Ship_Con_ID  INTEGER,
   @Trip_ID      INTEGER;
   BEGIN TRY
       BEGIN TRAN
