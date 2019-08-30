@@ -270,7 +270,7 @@ GO
 Description: Insert into tblPurchaseOrder
 Change Log: When,Who,What**
 2019-08-30, Maxwell, Created Sproc.*/
-CREATE PROCEDURE tblPurchaseOrder (
+CREATE PROCEDURE uspINSERT_PurchaseOrder (
 @BrokerFname NVARCHAR(30),
 @BrokerLname NVARCHAR(30),
 @BrokerCompany NVARCHAR(50),
