@@ -265,3 +265,39 @@ BEGIN
   RETURN @RC;
 END -- Body
 GO
+
+/* Author: Maxwell
+Description: Insert into tblPurchaseOrder
+Change Log: When,Who,What**
+2019-08-30, Maxwell, Created Sproc.*/
+CREATE PROCEDURE tblPurchaseOrder (
+@BrokerFname NVARCHAR(30),
+@BrokerLname NVARCHAR(30),
+@BrokerCompany NVARCHAR(50),
+@PODate Date
+)
+AS
+  BEGIN -- Body
+  DECLARE @RC int = 0;
+  DECLARE @B_ID INT = (SELECT BrokerID 
+					   FROM tblBroker 
+					   WHERE BrokerFname = @BrokerFname
+					   And BrokerLname = @BrokerLname
+					   And BrokerCompany = @BrokerCompany)
+    BEGIN TRY
+      BEGIN TRAN
+        INSERT INTO tblPurchaseOrder(BrokerID, PODate)
+        VALUES (@B_ID, @PODate)
+      COMMIT TRAN
+      SET @RC = +1;
+    END TRY
+  BEGIN CATCH
+    IF(@@Trancount > 0)
+      ROLLBACK TRAN;
+      PRINT Error_Message();
+      SET @RC = -1;
+  END CATCH
+  RETURN @RC;
+  END -- Body
+GO
+
