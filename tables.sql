@@ -570,7 +570,10 @@ GO
 CREATE TABLE [dbo].[tblCoffeeContainer]
 (
   [CoffeeContainerID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-  [CoffeeContainerTypeID] INT FOREIGN KEY REFERENCES tbl
+  [CoffeeContainerTypeID] INT FOREIGN KEY REFERENCES tblCoffeeContainerType (CoffeeContainerTypeID) NOT NULL,
+  [FarmID] INT FOREIGN KEY REFERENCES tblFarm (FarmID) NOT NULL,
+  [Weight] Numeric(8,2),
+  [Volume] Numeric(8,2)
 );
 GO
 
