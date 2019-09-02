@@ -1,4 +1,5 @@
 /* Insert into Joey's Tables*/
+-- Brokers
 EXEC [dbo].uspINSERT_tblBroker
 	@BrokerFname = 'Matthew',
 	@BrokerLname = 'Torrance',
@@ -20,41 +21,105 @@ EXEC [dbo].uspINSERT_tblBroker
 	@BrokerCompany = 'Superhalk Industries'
 GO
 EXEC [dbo].uspINSERT_tblBroker
-	@BrokerFname = 'Matthew',
-	@BrokerLname = 'Torrance',
+	@BrokerFname = 'Russell',
+	@BrokerLname = 'Shepard',
 	@BrokerCompany = 'Coffee Experts'
 GO
 EXEC [dbo].uspINSERT_tblBroker
-	@BrokerFname = 'Matthew',
-	@BrokerLname = 'Torrance',
+	@BrokerFname = 'Jim',
+	@BrokerLname = 'Nance',
 	@BrokerCompany = 'Coffee Experts'
 GO
 EXEC [dbo].uspINSERT_tblBroker
-	@BrokerFname = 'Matthew',
-	@BrokerLname = 'Torrance',
+	@BrokerFname = 'Derek',
+	@BrokerLname = 'Jeter',
 	@BrokerCompany = 'Coffee Experts'
 GO
-EXEC [dbo].uspINSERT_tblBroker('Kate','Superhalk','Superhalk Industries')
-EXEC [dbo].uspINSERT_tblBroker('Gary','Sparkle','Superhalk Industries')
-EXEC [dbo].uspINSERT_tblBroker('Jim','Superhalk','Superhalk Industries')
-EXEC [dbo].uspINSERT_tblBroker('Dan','Raymond','Coffee Experts')
-EXEC [dbo].uspINSERT_tblBroker('Rick','Fish','Coffee Experts')
-EXEC [dbo].uspINSERT_tblBroker('Doris','Bishop','Coffee Experts')
-EXEC [dbo].uspINSERT_tblBroker('Kate','Jolie','Coffee Experts')
-EXEC [dbo].uspINSERT_tblBroker('Carla','Jones','Coffee Deals')
-EXEC [dbo].uspINSERT_tblBroker('Daniel','Jones','Coffee Deals')
-EXEC [dbo].uspINSERT_tblBroker('Eli','Shurmer','Coffee Deals')
-EXEC [dbo].uspINSERT_tblBroker('Pat','Gettleman','Coffee Deals')
+EXEC [dbo].uspINSERT_tblBroker
+	@BrokerFname = 'Alex',
+	@BrokerLname = 'Morgan',
+	@BrokerCompany = 'Coffee Experts'
+GO
+EXEC [dbo].uspINSERT_tblBroker
+	@BrokerFname = 'Megan',
+	@BrokerLname = 'Rapapoe',
+	@BrokerCompany = 'Coffee Deals'
+GO
+EXEC [dbo].uspINSERT_tblBroker
+	@BrokerFname = 'Yasiel',
+	@BrokerLname = 'Puig',
+	@BrokerCompany = 'Coffee Deals'
+GO
+EXEC [dbo].uspINSERT_tblBroker
+	@BrokerFname = 'Rodger',
+	@BrokerLname = 'Godell',
+	@BrokerCompany = 'Coffee Deals'
+GO
+EXEC [dbo].uspINSERT_tblBroker
+	@BrokerFname = 'Oprah',
+	@BrokerLname = 'Winfrey',
+	@BrokerCompany = 'Coffee Deals'
+GO
 
-EXEC [dbo].uspINSERT_tblInspector('Matthew','Torrance','Superhalk Industries')
-EXEC [dbo].uspINSERT_tblInspector('Kate','Superhalk','Superhalk Industries')
-EXEC [dbo].uspINSERT_tblInspector('Gary','Sparkle','Superhalk Industries')
-EXEC [dbo].uspINSERT_tblInspector('Jim','Superhalk','Superhalk Industries')
-EXEC [dbo].uspINSERT_tblInspector('Dan','Raymond','Coffee Experts')
-EXEC [dbo].uspINSERT_tblInspector('Rick','Fish','Coffee Experts')
-EXEC [dbo].uspINSERT_tblInspector('Doris','Bishop','Coffee Experts')
-EXEC [dbo].uspINSERT_tblInspector('Kate','Jolie','Coffee Experts')
-EXEC [dbo].uspINSERT_tblInspector('Carla','Jones','Coffee Deals')
-EXEC [dbo].uspINSERT_tblInspector('Daniel','Jones','Coffee Deals')
-EXEC [dbo].uspINSERT_tblInspector('Eli','Shurmer','Coffee Deals')
-EXEC [dbo].uspINSERT_tblInspector('Pat','Gettleman','Coffee Deals')
+-- Inspectors
+EXEC [dbo].uspINSERT_tblInspector
+	@InspectorFname = 'Eli',
+	@InspectorLname = 'Manning',
+	@InspectorCompany = 'Inspector Spector'
+GO
+EXEC [dbo].uspINSERT_tblInspector
+	@InspectorFname = 'Daniel',
+	@InspectorLname = 'Jones',
+	@InspectorCompany = 'Inspector Spector'
+GO
+EXEC [dbo].uspINSERT_tblInspector
+	@InspectorFname = 'Saquon',
+	@InspectorLname = 'Barkely',
+	@InspectorCompany = 'Inspector Spector'
+GO
+EXEC [dbo].uspINSERT_tblInspector
+	@InspectorFname = 'Pat',
+	@InspectorLname = 'Mahomes',
+	@InspectorCompany = 'Inspector Spector'
+GO
+EXEC [dbo].uspINSERT_tblInspector
+	@InspectorFname = 'Hope',
+	@InspectorLname = 'Solo',
+	@InspectorCompany = 'Bean Inspector'
+GO
+EXEC [dbo].uspINSERT_tblInspector
+	@InspectorFname = 'Emma',
+	@InspectorLname = 'Watson',
+	@InspectorCompany = 'Bean Inspector'
+GO
+EXEC [dbo].uspINSERT_tblInspector
+	@InspectorFname = 'Joc',
+	@InspectorLname = 'Peterson',
+	@InspectorCompany = 'Bean Inspector'
+GO
+EXEC [dbo].uspINSERT_tblInspector
+	@InspectorFname = 'Jennifer',
+	@InspectorLname = 'Aniston',
+	@InspectorCompany = 'Bean Inspector'
+GO
+EXEC [dbo].uspINSERT_tblInspector
+	@InspectorFname = 'Courtney',
+	@InspectorLname = 'Cox',
+	@InspectorCompany = 'InSPECz'
+GO
+EXEC [dbo].uspINSERT_tblInspector
+	@InspectorFname = 'Hun-Jin',
+	@InspectorLname = 'Ryu',
+	@InspectorCompany = 'InSPECz'
+GO
+EXEC [dbo].uspINSERT_tblInspector
+	@InspectorFname = 'Kenta',
+	@InspectorLname = 'Maeta',
+	@InspectorCompany = 'InSPECz'
+GO
+EXEC [dbo].uspINSERT_tblInspector
+	@InspectorFname = 'Reese',
+	@InspectorLname = 'Whitherspoon',
+	@InspectorCompany = 'InSPECz'
+GO
+
