@@ -4,7 +4,7 @@
 -- Change Log: When,Who,What
 -- 2019-08-24,Davisa88,Created File
 --**************************************************************************--
-
+USE summer_starbucks_teamA
 /* Author:
 Description:
 Change Log: When,Who,What**
@@ -148,6 +148,146 @@ AS
       BEGIN TRAN
         INSERT INTO tblCoffeeContainer (CoffeeContainerTypeID, FarmID, [Weight], [Volume])
         VALUES (@CCT_ID, @F_ID, @Weight, @Volume)
+      COMMIT TRAN
+      SET @RC = +1;
+    END TRY
+  BEGIN CATCH
+    IF(@@Trancount > 0)
+      ROLLBACK TRAN;
+      PRINT Error_Message();
+      SET @RC = -1;
+  END CATCH
+  RETURN @RC;
+  END -- Body
+GO
+
+/* Author: Austin Quach
+Description: Insert into tblTrip
+Change Log: When,Who,What**
+2019-08-26, Austin, Created Sproc.*/
+CREATE PROCEDURE uspInsertTrip (
+-- add any parameters here
+@TransportName NVARCHAR(35),
+@ShippingContainerName NVARCHAR(35),
+@OriginShippingPort NVARCHAR(100),
+@DestinationShippingPort NVARCHAR(100),
+@DepartureTime DateTime,
+@ArrivalTime DateTime
+)
+AS
+BEGIN
+  -- Body
+  DECLARE @RC int = 0;
+
+  DECLARE @TRANSPORT_ID INT = (SELECT TransportID FROM tblTransport WHERE TransportName = @TransportName)
+  DECLARE @SC_ID INT = (SELECT ShippingContainerID FROM tblShippingContainer WHERE ShippingContainerName = @ShippingContainerName)
+
+  BEGIN TRY
+      BEGIN TRAN
+      -- Transaction Code --
+        INSERT INTO tblTrip (TransportID, ShippingContainerID, [OriginShippingPort], [DestinationShippingPort], [DepartureTime], [ArrivalTime])
+        VALUES (@TRANSPORT_ID, @SC_ID, @OriginShippingPort, @DestinationShippingPort, @DepartureTime, @ArrivalTime)
+      COMMIT TRAN
+      SET @RC = +1;
+    END TRY
+  BEGIN CATCH
+    IF(@@Trancount > 0)
+      ROLLBACK TRAN;
+      PRINT Error_Message();
+      SET @RC = -1;
+  END CATCH
+  RETURN @RC;
+END -- Body
+GO
+
+/* Author: Alex
+Description: A SPROC to insert info into tblShippingContainer
+Change Log: When,Who,What**
+< DATE >,< WHO >,Created Sproc.*/
+CREATE PROCEDURE uspInsert_ShippingContainer (
+@Capacity        NUMERIC(5,2),
+@Volume          NUMERIC(5,2),
+@ShipConTypeName NVARCHAR(50),
+@Coff_Cont_ID    INTEGER,
+@InspectFname    NVARCHAR(30),
+@InspectLname    NVARCHAR(30),
+@TripID          INTEGER
+)
+AS
+BEGIN
+  DECLARE @RC int = 0,
+  -- Look up ID's from appropriate tables -- 
+  @Coff_Cont_ID INTEGER, 
+  @Inspect_ID   INTEGER,
+  @Ship_Con_ID  INTEGER,
+  @Trip_ID      INTEGER;
+  BEGIN TRY
+      BEGIN TRAN
+
+      SET @Inspect_ID = (SELECT InspectionID -- Information for finding InspectorID
+                         FROM   tblInspection INS
+                         JOIN   tblInspector IOR ON INS.InspectorID = IOR.InspectorID
+                         WHERE  InspectorFName = @InspectFname
+                         AND    InspectorLName = @InspectLname
+      )
+      SET @Ship_Con_ID = (SELECT ShippingContainerTypeID -- For finding the shippingcontainerTypeID
+                          FROM tblShippingContainerType
+                          WHERE ShippingContainerTypeName = @ShipConTypeName
+      )
+      -- Transaction Code --
+      INSERT INTO tblShippingContainer(
+          CoffeeContainerID,
+          InspectionID,
+          ShippingContainerID,
+          TripID,
+          ShippingContainerName,
+          Capacity,
+          Volume
+      )
+      VALUES(
+          @Coff_Cont_ID,
+          @Inspect_ID,
+          @Ship_Con_ID,
+          @TripID,
+          @ShipConName,
+          @Capacity,
+          @Volume
+      )
+      COMMIT TRAN
+      SET @RC = +1;
+    END TRY
+  BEGIN CATCH
+    IF(@@Trancount > 0)
+      ROLLBACK TRAN;
+      PRINT Error_Message();
+      SET @RC = -1;
+  END CATCH
+  RETURN @RC;
+END -- Body
+GO
+
+/* Author: Maxwell
+Description: Insert into tblPurchaseOrder
+Change Log: When,Who,What**
+2019-08-30, Maxwell, Created Sproc.*/
+CREATE PROCEDURE uspINSERT_PurchaseOrder (
+@BrokerFname NVARCHAR(30),
+@BrokerLname NVARCHAR(30),
+@BrokerCompany NVARCHAR(50),
+@PODate Date
+)
+AS
+  BEGIN -- Body
+  DECLARE @RC int = 0;
+  DECLARE @B_ID INT = (SELECT BrokerID 
+					   FROM tblBroker 
+					   WHERE BrokerFname = @BrokerFname
+					   And BrokerLname = @BrokerLname
+					   And BrokerCompany = @BrokerCompany)
+    BEGIN TRY
+      BEGIN TRAN
+        INSERT INTO tblPurchaseOrder(BrokerID, PODate)
+        VALUES (@B_ID, @PODate)
       COMMIT TRAN
       SET @RC = +1;
     END TRY
