@@ -4,7 +4,7 @@
 -- Change Log: When,Who,What
 -- 2019-07-30,Davisa88,Created File
 --**************************************************************************--
-
+/*
 Begin Try
 	Use Master;
 	If Exists(Select summer_starbucks_teamA
@@ -19,11 +19,11 @@ End Try
 Begin Catch
 	Print Error_Number();
 End Catch
-go
+go*/
 Use summer_starbucks_teamA;
 
 -- Conventions: Pleae copy and paste the following tables to use as conventions
-
+/*
 --*************************************************************************--
 -- Create Table:
 -- Description:
@@ -45,10 +45,10 @@ CREATE TABLE [dbo].[TableName]
 );
 GO
 
-/* Author:
+Author:
 Description:
 Change Log: When,Who,What**
-< DATE >,< WHO >,Created Sproc.*/
+< DATE >,< WHO >,Created Sproc.
 CREATE PROCEDURE uspStoredProcedure (
 -- add any parameters here
 )
@@ -71,6 +71,7 @@ BEGIN
   RETURN @RC;
 END -- Body
 GO
+*/
 
 --*************************************************************************--
 -- Create Table: tblShippingStatus
@@ -501,8 +502,8 @@ GO
 CREATE TABLE [dbo].[tblSHIP_TRIP]
 (
   ShipTripID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-  TripID INT FOREIGN KEY REFERENCES tblTRIP (TripID) NOT NULL,
-  ShippingStatusID INT FOREIGN KEY REFERENCES tblSHIPPING_STATUS (ShippingStatusID) NOT NULL,
+  TripID INT FOREIGN KEY REFERENCES tblTrip (TripID) NOT NULL,
+  ShippingStatusID INT FOREIGN KEY REFERENCES tblShippingStatus (ShippingStatusID) NOT NULL,
   StartDateTime DATETIME NOT NULL,
   EndDateTime DATETIME NULL
 );
@@ -595,7 +596,6 @@ CREATE TABLE [dbo].tblShippingContainer
   [CoffeeContainerID] INT FOREIGN KEY REFERENCES tblCoffeeContainer (CoffeeContainerID) NOT NULL,
   [InspectionID] INT FOREIGN KEY REFERENCES tblInspection (InspectionID) NOT NULL,
   [ShippingContainerTypeID] INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL,
-  [TripID] INT FOREIGN KEY REFERENCES tblTrip (TripID) NOT NULL,
   [ShippingContainerName] NVARCHAR(35) NOT NULL,
   [Capacity] NUMERIC(8,2) NOT NULL,
   [Volume] NUMERIC(8,2) NOT NULL
@@ -617,7 +617,6 @@ GO
 CREATE TABLE [dbo].tblInspection
 (
   [InspectionID]        INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-  [ShippingContainerID] INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL,
   [InspectorID]         INT FOREIGN KEY REFERENCES tblInspector (InspectorID) NOT NULL,
   [InspectionDateTime]  DATETIME NOT NULL
 );
