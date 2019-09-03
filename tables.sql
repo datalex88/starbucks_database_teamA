@@ -345,7 +345,7 @@ GO
 -- Create Table: tblFarmCountry
 -- Description: A table with information on the country the farm is in.
 -- Change Log: When,Who,What
--- 2019-08-16, Maxwell/Youssof, Created Table
+-- 2019-08-16, Maxwell/, Created Table
 --**************************************************************************--
 -- Create a new table called '[tblFarmCountry]' in schema '[dbo]'
 -- Drop the table if it already exists
@@ -509,25 +509,6 @@ CREATE TABLE [dbo].[tblSHIP_TRIP]
 GO
 
 --*************************************************************************--
--- Create Table: tblCoffeeContainer
--- Description: A table with information on CoffeeContainers.
--- Change Log: When,Who,What
--- 2019-08-26, Joey, Created Table
---**************************************************************************--
--- Create a new table called '[tblCoffeeContainer]' in schema '[dbo]'
--- Drop the table if it already exists
-IF OBJECT_ID('[dbo].[tblCoffeeContainer]', 'U') IS NOT NULL
-DROP TABLE [dbo].[tblCoffeeContainer]
-GO
--- Create the table in the specified schema
-CREATE TABLE [dbo].[tblCoffeeContainer]
-(
-  [CoffeeContainerID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-  [CoffeeContainerTypeID] INT FOREIGN KEY REFERENCES tbl
-);
-GO
-
---*************************************************************************--
 -- Create Table: tblEnvironmentalStatus
 -- Description: A table with information on the encironmental conditions within the the container for the coffee beans.
 -- Change Log: When,Who,What
@@ -618,5 +599,26 @@ CREATE TABLE [dbo].tblShippingContainer
   [ShippingContainerName] NVARCHAR(35) NOT NULL,
   [Capacity] NUMERIC(8,2) NOT NULL,
   [Volume] NUMERIC(8,2) NOT NULL
+);
+GO
+
+--*************************************************************************--
+-- Create Table: tblInspection
+-- Description: A table with information on the persons growing the coffee plants.
+-- Change Log: When,Who,What
+-- 2019-08-16, Youssof, Created Table
+--**************************************************************************--
+-- Create a new table called '[tblInspection]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[tblInspection]', 'U') IS NOT NULL
+DROP TABLE [dbo].tblInspection
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].tblInspection
+(
+  [InspectionID]        INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [ShippingContainerID] INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL,
+  [InspectorID]         INT FOREIGN KEY REFERENCES tblInspector (InspectorID) NOT NULL,
+  [InspectionDateTime]  DATETIME NOT NULL
 );
 GO
