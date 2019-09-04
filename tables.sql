@@ -19,7 +19,8 @@ End Try
 Begin Catch
 	Print Error_Number();
 End Catch
-go*/
+go
+*/
 Use summer_starbucks_teamA;
 
 -- Conventions: Pleae copy and paste the following tables to use as conventions
@@ -309,12 +310,12 @@ CREATE TABLE [dbo].tblFarm
   [CoffeeGrowerID] INT FOREIGN KEY REFERENCES tblCoffeeGrower (CoffeeGrowerID) NOT NULL,
   [FarmCountryID] INT FOREIGN KEY REFERENCES tblFarmCountry (FarmCountryID) NOT NULL,
   [FarmName] NVARCHAR(35) NOT NULL,
-  [Address] NVARCHAR(35) NOT NULL,
-  [City] NVARCHAR(35) NOT NULL,
-  [Latitude] DECIMAL(9,6) NOT NULL,
-  [Longitude] DECIMAL(9,6) NOT NULL,
-  [Acreage] NUMERIC(8,2) NOT NULL,
-  [FarmDesc] NVARCHAR(100) NOT NULL
+  [Address] NVARCHAR(35) NULL,
+  [City] NVARCHAR(35) NULL,
+  [Latitude] FLOAT NULL,
+  [Longitude] FLOAT NULL,
+  [Acreage] NUMERIC(8,2) NULL,
+  [FarmDesc] NVARCHAR(100) NULL
   -- Specify more columns here
 );
 GO
@@ -336,8 +337,8 @@ CREATE TABLE [dbo].tblCoffeeContainer
   [CoffeeContainerID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
   [FarmID] INT FOREIGN KEY REFERENCES tblFarm (FarmID) NOT NULL,
   [CoffeeContainerTypeID] INT FOREIGN KEY REFERENCES tblCoffeeContainerType (CoffeeContainerTypeID) NOT NULL,
-  [Weight] NUMERIC(8,2) NOT NULL,
-  [Volume] NUMERIC(8,2) NOT NULL
+  [Weight] NUMERIC(8,2) NULL,
+  [Volume] NUMERIC(8,2) NULL
   -- Specify more columns here
 );
 GO
@@ -524,9 +525,9 @@ GO
 CREATE TABLE [dbo].tblEnvironmentalStatus
 (
   [EnvironmentalStatusID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-  [Humidity] NUMERIC(8,2) NOT NULL,
-  [Temperature] NUMERIC(8,2) NOT NULL,
-  [Sun Exposure] NUMERIC(8,2) NOT NULL
+  [Humidity] NUMERIC(8,2) NULL,
+  [Temperature] NUMERIC(8,2) NULL,
+  [Sun Exposure] NUMERIC(8,2) NULL
   -- Specify more columns here
 );
 GO
@@ -547,8 +548,8 @@ CREATE TABLE [dbo].tblContainerStatus
   [ContainerStatusID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
   [EnvironmentalStatusID] INT FOREIGN KEY REFERENCES tblEnvironmentalStatus (EnvironmentalStatusID) NOT NULL,
   [ShippingContainerID] INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL,
-  [StartDateTime] DateTime NOT NULL,
-  [EndDateTime] DateTime NOT NULL
+  [StartDateTime] DateTime NULL,
+  [EndDateTime] DateTime NULL
   -- Specify more columns here
 );
 GO
@@ -568,12 +569,11 @@ GO
 CREATE TABLE [dbo].[tblTrip]
 (
   [TripID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-  [TransportID] INT FOREIGN KEY REFERENCES tblTransport (TransportID) NOT NULL,
+  [TransportID]         INT FOREIGN KEY REFERENCES tblTransport (TransportID) NOT NULL,
   [ShippingContainerID] INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL,
-  [OriginShippingPort] VARCHAR(100) NOT NULL,
-  [DestinationShippingPort] VARCHAR(100) NOT NULL,
-  [DepartureTime] DateTime NOT NULL,
-  [ArrivalTime] DateTime NOT NULL
+  [LocaitonID]          INT FOREIGN KEY REFERENCES tblLOCATION (LocaitonID) NOT NULL,
+  [DepartureTime] DateTime NULL,
+  [ArrivalTime] DateTime NULL
   -- Specify more columns here
 );
 GO
@@ -592,13 +592,13 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE [dbo].tblShippingContainer
 (
-  [ShippingContainerID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-  [CoffeeContainerID] INT FOREIGN KEY REFERENCES tblCoffeeContainer (CoffeeContainerID) NOT NULL,
-  [InspectionID] INT FOREIGN KEY REFERENCES tblInspection (InspectionID) NOT NULL,
-  [ShippingContainerTypeID] INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL,
-  [ShippingContainerName] NVARCHAR(35) NOT NULL,
-  [Capacity] NUMERIC(8,2) NOT NULL,
-  [Volume] NUMERIC(8,2) NOT NULL
+  [ShippingContainerID]     INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [CoffeeContainerID]       INT FOREIGN KEY REFERENCES tblCoffeeContainer       (CoffeeContainerID) NOT NULL,
+  [InspectionID]            INT FOREIGN KEY REFERENCES tblInspection            (InspectionID) NOT NULL,
+  [ShippingContainerTypeID] INT FOREIGN KEY REFERENCES tblShippingContainerType (ShippingContainerTypeID) NOT NULL,
+  [ShippingContainerName] NVARCHAR(35) NULL,
+  [Capacity] NUMERIC(8,2) NULL,
+  [Volume] NUMERIC(8,2) NULL
 );
 GO
 
@@ -618,6 +618,6 @@ CREATE TABLE [dbo].tblInspection
 (
   [InspectionID]        INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
   [InspectorID]         INT FOREIGN KEY REFERENCES tblInspector (InspectorID) NOT NULL,
-  [InspectionDateTime]  DATETIME NOT NULL
+  [InspectionDateTime]  DATETIME NULL
 );
 GO
