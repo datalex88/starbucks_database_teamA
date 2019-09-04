@@ -88,9 +88,9 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE [dbo].[tblShippingStatus]
 (
-  [ShippingStatusID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-  [ShippingStatusName] NVARCHAR(35) NOT NULL,
-  [ShippingStatusDesc] NVARCHAR(100) NOT NULL
+  [ShippingStatusID]   INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [ShippingStatusName] NVARCHAR(35)      NOT NULL,
+  [ShippingStatusDesc] NVARCHAR(100)     NOT NULL
   -- Specify more columns here
 );
 GO
@@ -197,7 +197,7 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE [dbo].[tblShippingContainerType]
 (
-  [ShippingContainerID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [ShippingContainerTypeID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
   [ShippingContainerName] NVARCHAR(50) NOT NULL,
   [ShippingContainerDescr] NVARCHAR(50) NOT NULL,
   [ShippingContainerBrand] NVARCHAR(50) NOT NULL,
@@ -571,7 +571,7 @@ CREATE TABLE [dbo].[tblTrip]
   [TripID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
   [TransportID]         INT FOREIGN KEY REFERENCES tblTransport (TransportID) NOT NULL,
   [ShippingContainerID] INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL,
-  [LocaitonID]          INT FOREIGN KEY REFERENCES tblLOCATION (LocaitonID) NOT NULL,
+  [LocaitonID]          INT FOREIGN KEY REFERENCES tblLOCATION (LocationID) NOT NULL,
   [DepartureTime] DateTime NULL,
   [ArrivalTime] DateTime NULL
   -- Specify more columns here
