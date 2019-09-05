@@ -5,10 +5,12 @@
 -- 2019-08-24,Davisa88,Created File
 --**************************************************************************--
 USE summer_starbucks_teamA
-/* Author:
+GO
+/* 
+Author:
 Description:
 Change Log: When,Who,What**
-< DATE >,< WHO >,Created Sproc.*/
+< DATE >,< WHO >,Created Sproc.
 CREATE PROCEDURE uspStoredProcedure (
 -- add any parameters here
 )
@@ -31,6 +33,7 @@ BEGIN
   RETURN @RC;
 END -- Body
 GO
+*/
 
 /* Author: Joey
 Description: Insert into tblInspector
@@ -288,6 +291,36 @@ AS
       BEGIN TRAN
         INSERT INTO tblPurchaseOrder(BrokerID, PODate)
         VALUES (@B_ID, @PODate)
+      COMMIT TRAN
+      SET @RC = +1;
+    END TRY
+  BEGIN CATCH
+    IF(@@Trancount > 0)
+      ROLLBACK TRAN;
+      PRINT Error_Message();
+      SET @RC = -1;
+  END CATCH
+  RETURN @RC;
+  END -- Body
+GO
+
+/* Author: Alex
+Description: Insert into tblFarm
+Change Log: When,Who,What**
+2019-09-5, Alex, Created Sproc.*/
+CREATE PROCEDURE uspInsertCoffeeContainer (
+@ConffeeContainerTypeID INT,
+@FarmID                 INT,
+@wt                     NUMERIC(8,2) NULL,
+@vol                    NUMERIC(8,2) NULL
+)
+AS
+  BEGIN -- Body
+  DECLARE @RC int = 0;
+    BEGIN TRY
+      BEGIN TRAN
+        INSERT INTO tblCoffeeContainer([CoffeeContainerTypeID], [FarmID], [Weight], [Volume])
+        VALUES             (@ConffeeContainerTypeID, @FarmID, @wt, @vol)
       COMMIT TRAN
       SET @RC = +1;
     END TRY
