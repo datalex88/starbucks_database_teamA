@@ -1,7 +1,7 @@
 USE summer_starbucks_teamA
 GO
 
--- Adding values to tblShippingStatus --
+-- Adding values to tblCoffeeContainerType --
 -- 2019/09/04 Alex
 -- Insert rows into table 'TableName' in schema '[dbo]'
 INSERT INTO [dbo].[tblCoffeeContainerType]
@@ -21,11 +21,11 @@ VALUES
 GO
 SELECT * FROM tblFarm
 SELECT * FROM tblCoffeeContainerType
-SELECT * FROM tblCoffeeContainer
-SELECT * FROM tblShippingContainer
-GO
-SELECT RAND()*(61-59)+59;
-GO
+
+/*
+Wrapper to populate the table CoffeeContainer
+Alex
+2019/09/05
 
 SET ANSI_NULLS ON
 GO
@@ -38,10 +38,10 @@ AS
 
 DECLARE @cofftypeid INT
 DECLARE @frmid      INT
-DECLARE @wei NUMERIC(8,2) -- Grainpro 15, jute 60, and vacuum sealed 20
+DECLARE @wei NUMERIC(8,2) -- Grainpro 25, jute 60, and vacuum sealed 20
 DECLARE @vol NUMERIC(8,2)
 
-DECLARE @Count_farID  INT = (SELECT COUNT(*) FROM tblFarm)
+DECLARE @Count_farID  INT = (SELECT COUNT(*) FROM tblFarm WHERE FarmCountryID = 8) --YOU WILL NEED TO CHANGE THIS TO 13 AFTER RUNNING THE ETHEOPIAN FARMS
 
 DECLARE @fid INT
 DECLARE @Rand INT
@@ -49,16 +49,18 @@ DECLARE @Rand INT
 WHILE @RUN > 0
 BEGIN
 
-SET @fid = (SELECT FLOOR(1000 * RAND()) + 1390)
+SET @fid = (SELECT FLOOR(RAND() * (2889-2391+1)) + 2391) -- Change the first number when you move to vietnam as the biggest FarmID and the second as the smallest FarmID
 
 IF @fid < 1 
 	BEGIN
 		SET @fid = 2
 	END
-SET @frmid = (SELECT FarmID FROM tblFarm WHERE FarmID = @fid)
-SET @cofftypeid = (43)
+SET @frmid = (SELECT * FROM tblFarm 
+                WHERE FarmCountryID = 8 --YOU WILL NEED TO CHANGE THIS TO 13 AFTER RUNNING THE ETHEOPIAN FARMS
+                AND FarmID = @fid)
+SET @cofftypeid = (43) -- Change this to 42 for the GrainPro Bag
 SET @vol = (0)
-SET @wei = (SELECT RAND()*(61-59)+59)
+SET @wei = (SELECT RAND()*(61-59)+59) -- CHANGE THIS TO BE A RANDOM NUMBER BETWEEN 24 & 26
 
 EXEC uspInsertCoffeeContainer
     @CoffeeContainerTypeID  = @cofftypeid,
@@ -68,11 +70,13 @@ EXEC uspInsertCoffeeContainer
 
 SET @RUN = @RUN -1
 END
-
+-- Execute wrapper
 GO
 DECLARE @RC int
 DECLARE @RUN int
 
 EXECUTE @RC = [dbo].[davis_WRAPPER_uspNewCoffeeContainer] 
-   @RUN = 4000000
+   @RUN = 150000
 GO
+*/
+
