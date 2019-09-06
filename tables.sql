@@ -594,7 +594,6 @@ CREATE TABLE [dbo].tblShippingContainer
 (
   [ShippingContainerID]     INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
   [CoffeeContainerID]       INT FOREIGN KEY REFERENCES tblCoffeeContainer       (CoffeeContainerID) NOT NULL,
-  [InspectionID]            INT FOREIGN KEY REFERENCES tblInspection            (InspectionID) NOT NULL,
   [ShippingContainerTypeID] INT FOREIGN KEY REFERENCES tblShippingContainerType (ShippingContainerTypeID) NOT NULL,
   [ShippingContainerName] NVARCHAR(35) NULL,
   [Capacity] NUMERIC(8,2) NULL,
@@ -618,6 +617,7 @@ CREATE TABLE [dbo].tblInspection
 (
   [InspectionID]        INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
   [InspectorID]         INT FOREIGN KEY REFERENCES tblInspector (InspectorID) NOT NULL,
+  [ShippingContainerID] INT FOREIGN KEY REFERENCES tblShippingContainer (ShippingContainerID) NOT NULL,
   [InspectionDateTime]  DATETIME NULL
 );
 GO
