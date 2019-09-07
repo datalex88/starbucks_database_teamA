@@ -165,7 +165,7 @@ GO
 Description: Insert into tblTrip
 Change Log: When,Who,What**
 2019-08-26, Austin, Created Sproc.*/
-CREATE PROCEDURE uspInsertTrip (
+CREATE PROCEDURE uspINSERT_tblTrip (
 -- add any parameters here
 @TransportName NVARCHAR(35),
 @ShippingContainerName NVARCHAR(35),
@@ -204,7 +204,7 @@ GO
 Description: A SPROC to insert info into tblShippingContainer
 Change Log: When,Who,What**
 < DATE >,< WHO >,Created Sproc.*/
-CREATE PROCEDURE uspInsert_ShippingContainer (
+CREATE PROCEDURE uspINSERT_tblShippingContainer (
 @Capacity        NUMERIC(5,2),
 @Volume          NUMERIC(5,2),
 @ShipConTypeName NVARCHAR(50),
@@ -270,7 +270,7 @@ GO
 Description: Insert into tblPurchaseOrder
 Change Log: When,Who,What**
 2019-08-30, Maxwell, Created Sproc.*/
-CREATE PROCEDURE uspINSERT_PurchaseOrder (
+CREATE PROCEDURE uspINSERT_tblPurchaseOrder (
 @BrokerFname NVARCHAR(30),
 @BrokerLname NVARCHAR(30),
 @BrokerCompany NVARCHAR(50),
