@@ -621,3 +621,24 @@ CREATE TABLE [dbo].tblInspection
   [InspectionDateTime]  DATETIME NULL
 );
 GO
+
+--*************************************************************************--
+-- Create Table: tblTripLocation
+-- Description: A table with information on trip location.
+-- Change Log: When,Who,What
+-- 2019-09-06, Austin ,Created Table
+--**************************************************************************--
+-- Create a new table called '[tblTripLocation]' in schema '[dbo]'
+-- Drop the table if it already exists
+IF OBJECT_ID('[dbo].[summer_starbucks_teamA]', 'U') IS NOT NULL
+DROP TABLE [dbo].[tblTripLocation]
+GO
+-- Create the table in the specified schema
+CREATE TABLE [dbo].[tblTripLocation]
+(
+  [TripLocationID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+  [TripID] INT FOREIGN KEY REFERENCES tblTRIP (TripID) NOT NULL,
+  [LocationID] INT FOREIGN KEY REFERENCES tblLOCATION (LocationID) NOT NULL
+  -- Specify more columns here
+);
+GO
